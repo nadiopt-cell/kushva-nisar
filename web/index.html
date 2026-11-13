@@ -233,12 +233,6 @@ function baseStyle(){
 function addSources(m){
   if(m.getSource('s2_pre')) return;
   const r=meta.rasters;
-  m.addSource('s2_pre',{type:'image',url:'data/s2_pre.jpg',coordinates:r.s2_pre});
-  m.addSource('s2_post',{type:'image',url:'data/s2_post.jpg',coordinates:r.s2_post});
-  m.addSource('nisar_coh',{type:'image',url:'data/nisar_coh.jpg',coordinates:r.nisar});
-  m.addSource('nisar_hv',{type:'image',url:'data/nisar_hv.jpg',coordinates:r.nisar});
-  m.addSource('nisar_dhv',{type:'image',url:'data/nisar_dhv.jpg',coordinates:r.nisar});
-  m.addSource('hill',{type:'image',url:'data/hillshade.png',coordinates:meta.hillshade});
   m.addSource('water',{type:'geojson',data:'data/water.geojson'});
   m.addSource('roads',{type:'geojson',data:'data/roads.geojson'});
   m.addSource('places',{type:'geojson',data:'data/places.geojson'});
@@ -250,8 +244,37 @@ function raster(id,src,op=1){
   return {id,type:'raster',source:src,paint:{'raster-opacity':op,'raster-fade-duration':160,'raster-resampling':'linear'},layout:{visibility:'none'}};
 }
 
-function addLayers(m){
+function canvasSource(m,id,url,coords){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    img.crossOrigin='anonymous';
+    img.onload=()=>{
+      const c=document.createElement('canvas');
+      c.width=img.width; c.height=img.height;
+      c.getContext('2d').drawImage(img,0,0);
+      c.style.display='none'; document.body.appendChild(c);
+      m.addSource(id,{type:'canvas',canvas:c,coordinates:coords,animate:false});
+      resolve();
+    };
+    img.onerror=()=>reject(new Error('image '+url));
+    img.src=url;
+  });
+}
+async function addRasterSources(m){
+  const r=meta.rasters;
+  await Promise.all([
+    canvasSource(m,'s2_pre','data/s2_pre.jpg',r.s2_pre),
+    canvasSource(m,'s2_post','data/s2_post.jpg',r.s2_post),
+    canvasSource(m,'nisar_coh','data/nisar_coh.jpg',r.nisar),
+    canvasSource(m,'nisar_hv','data/nisar_hv.jpg',r.nisar),
+    canvasSource(m,'nisar_dhv','data/nisar_dhv.jpg',r.nisar),
+    canvasSource(m,'hill','data/hillshade.png',meta.hillshade)
+  ]);
+}
+
+async function addLayers(m){
   addSources(m);
+  await addRasterSources(m);
   m.addLayer(raster('l_pre','s2_pre',1));
   m.addLayer(raster('l_post','s2_post',1));
   m.addLayer(raster('l_coh','nisar_coh',state.opacity));
@@ -330,8 +353,8 @@ function fmtScale(){
 function initMap(){
   map=makeMap('map');
   window.__map=map;
-  map.on('load',()=>{
-    try{ addLayers(map); $('#cbPre').checked=false; $('#cbPost').checked=false; $('#cbNisar').checked=true; $('#cbContour').checked=true; $('#cbHill').checked=true; applyMain(); }catch(e){ console.error('addLayers failed',e); $('#loader .ls').textContent='ошибка слоёв: '+e.message; }
+  map.on('load',async()=>{
+    try{ await addLayers(map); $('#cbPre').checked=false; $('#cbPost').checked=false; $('#cbNisar').checked=true; $('#cbContour').checked=true; $('#cbHill').checked=true; applyMain(); }catch(e){ console.error('addLayers failed',e); $('#loader .ls').textContent='ошибка слоёв: '+e.message; }
     let loaderDone=false;
     const hideLoader=()=>{ if(loaderDone) return; loaderDone=true; $('#loader').classList.add('hide'); };
     const checkLoaded=()=>{ if(map.isSourceLoaded('nisar_coh') && map.isSourceLoaded('s2_pre')) hideLoader(); };
@@ -360,8 +383,8 @@ function initCompare(){
   cmpA=makeMap('compareA'); cmpB=makeMap('compareB'); window.__cmpA=cmpA; window.__cmpB=cmpB;
   let ready=0;
   const done=()=>{ ready++; if(ready===2){ applyCompare(); const c=map.getCenter(); cmpA.jumpTo({center:c,zoom:map.getZoom()}); cmpB.jumpTo({center:c,zoom:map.getZoom()}); } };
-  cmpA.on('load',()=>{ addLayers(cmpA); done(); });
-  cmpB.on('load',()=>{ addLayers(cmpB); done(); });
+  cmpA.on('load',async()=>{ await addLayers(cmpA); done(); });
+  cmpB.on('load',async()=>{ await addLayers(cmpB); done(); });
   const sync=(src,dst)=>src.on('move',()=>{ if(lock)return; lock=true; dst.jumpTo({center:src.getCenter(),zoom:src.getZoom(),bearing:0,pitch:0}); lock=false; });
   sync(cmpA,cmpB); sync(cmpB,cmpA);
 }

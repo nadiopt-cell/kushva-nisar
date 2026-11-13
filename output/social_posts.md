@@ -17,8 +17,8 @@
 
 Название — от Борхеса: карта, которая почти совпала с территорией. Здесь она совпала настолько, что виден каждый повреждённый участок леса.
 
-🗺 Интерактивная карта: [ссылка]
-🖼 Постер и GIF: [ссылка]
+🗺 Интерактивная карта: https://nadiopt-cell.github.io/kushva-nisar/
+🖼 Постер и GIF: https://nadiopt-cell.github.io/kushva-nisar/
 
 Данные: NASA/ISRO NISAR L2 GCOV + GUNW (ASF DAAC), Sentinel-2 L2A (Copernicus/ESA), Copernicus DEM, OpenStreetMap.
 
@@ -34,7 +34,7 @@
 
 Интерактивная карта: оптика до/после (Sentinel-2, SWIR), NISAR L-band, контур ветровала и сравнение «до/после».
 
-🗺 [ссылка]
+🗺 https://nadiopt-cell.github.io/kushva-nisar/
 
 #30DayMapChallenge #NISAR #Кушва #ветровал #ГИС
 
@@ -59,8 +59,8 @@ The title comes from Borges: a map that almost coincided with the territory. Her
 
 Why it matters: L-band coherence provides an all-weather, day/night damage map — useful for rapid post-storm assessment in remote boreal forest, where optical imagery is often blocked by clouds.
 
-Interactive map: [link]
-Poster and GIF: [link]
+Interactive map: https://nadiopt-cell.github.io/kushva-nisar/
+Poster and GIF: https://nadiopt-cell.github.io/kushva-nisar/
 
 Data: NASA/ISRO NISAR L2 GCOV + GUNW (ASF DAAC), Sentinel-2 L2A (Copernicus/ESA), Copernicus DEM, OpenStreetMap.
 
@@ -74,7 +74,7 @@ Data: NASA/ISRO NISAR L2 GCOV + GUNW (ASF DAAC), Sentinel-2 L2A (Copernicus/ESA)
 
 A tornado through Kushva (Middle Urals) on 22 June 2026 left a 29 km scar and ≥510 ha of windthrow. Using NISAR L-band coherence (20 June → 2 July 2026), the damaged forest appears as a bright copper band — the canopy literally stops agreeing with itself between two radar passes.
 
-Interactive map with Sentinel-2 before/after (SWIR), NISAR L-band, contour and swipe comparison: [link]
+Interactive map with Sentinel-2 before/after (SWIR), NISAR L-band, contour and swipe comparison: https://nadiopt-cell.github.io/kushva-nisar/
 
 #30DayMapChallenge #NISAR #SAR #RemoteSensing #BorealForest
 
