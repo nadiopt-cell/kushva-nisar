@@ -1,0 +1,11 @@
+from pathlib import Path
+p=Path(r"E:\ai_project\30days_challenge\day14_borges\web\index.html")
+s=p.read_text(encoding="utf-8")
+s=s.replace("  m.addSource('nisar_comp',{type:'image',url:'data/nisar_comp.jpg',coordinates:r.nisar});\n","")
+s=s.replace("  m.addLayer(raster('l_comp','nisar_comp',state.opacity));\n","")
+s=s.replace("  setVis(map,'l_comp',nisar&&state.mode==='comp');\n","")
+s=s.replace("['l_coh','l_hv','l_dhv','l_comp'].forEach","['l_coh','l_hv','l_dhv'].forEach")
+s=s.replace("['l_coh','l_hv','l_dhv','l_comp','l_hill']","['l_coh','l_hv','l_dhv','l_hill']")
+p.write_text(s,encoding="utf-8")
+Path(r"E:\ai_project\30days_challenge\day14_borges\web\data\nisar_comp.jpg").unlink(missing_ok=True)
+print("ok")

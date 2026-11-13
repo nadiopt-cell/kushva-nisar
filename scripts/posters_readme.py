@@ -1,0 +1,47 @@
+from pathlib import Path
+R=Path(r"E:\ai_project\30days_challenge\day14_borges")
+text = """# Постеры · «Карта, которая почти стала территорией»
+
+Четыре постера: радар NISAR и оптика Sentinel-2, каждый на русском и английском.
+Контур ветровала **не нанесён** — только подпись под изображением, как просили.
+
+## Файлы
+
+| Файл | Что на постере | Язык |
+|---|---|---|
+| `output/poster_radar_ru.png/.jpg/.pdf` | NISAR L-band, когерентность HH, 20.06 → 02.07.2026 | RU |
+| `output/poster_radar_en.png/.jpg/.pdf` | NISAR L-band, HH coherence, 20 Jun → 2 Jul 2026 | EN |
+| `output/poster_optical_ru.png/.jpg/.pdf` | Sentinel-2 L2A, 28.07.2026, синтез SWIR B12/B8/B4 | RU |
+| `output/poster_optical_en.png/.jpg/.pdf` | Sentinel-2 L2A, 28 Jul 2026, SWIR composite B12/B8/B4 | EN |
+
+- Размер: **3000 × 4200 px**, 200 dpi → **38 × 53 см** (≈ A3+).
+- PNG — максимальное качество, JPG — для соцсетей, PDF — для печати.
+- `output/posters_contact.jpg` — контактный лист 2×2.
+
+## Что видно
+
+**Радар.** Светлая медная лента — ветровал. Это не амплитуда, а когерентность:
+мера того, насколько поверхность осталась той же самой между двумя проходами
+NISAR (20.06 и 02.07.2026, один 12-дневный цикл, трек 93D). Поваленный лес
+теряет когерентность почти полностью, поэтому след читается даже сквозь облака.
+Кроп: 16 × 20 км, 59.65°–59.82° E, 58.33°–58.51° N.
+
+**Оптика.** Пурпурная лента — поваленный лес на снимке Sentinel-2 от 28.07.2026
+(синтез SWIR: B12 → R, B8 → G, B4 → B). Зелёный — неповреждённый лес,
+пурпурный/розовый — открытая почва, город и ветровал.
+
+## Данные
+
+- NISAR: NASA/ISRO, L2 GCOV + GUNW PROVISIONAL V1, frequency A (L-band, 24 см),
+  HH/HV, 20 м, 20.06.2026 и 02.07.2026, ASF DAAC.
+- Sentinel-2: Copernicus/ESA, L2A, 28.07.2026, 10 м.
+- DEM: Copernicus DEM 30 м. OSM: © OpenStreetMap contributors.
+- Событие: смерч 22.06.2026, Кушва, Свердловская область; 29 км, ≥510 га.
+
+## Печать
+
+PDF уже с полем под обрез. Для типографии лучше PNG 3000×4200 (200 dpi)
+или попросить версию 300 dpi (4500×6300) — могу собрать отдельно.
+"""
+(R/"output/posters_README.md").write_text(text,encoding="utf-8")
+print("ok", (R/"output/posters_README.md").stat().st_size)

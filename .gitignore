@@ -1,0 +1,12 @@
+/data/
+/build/
+/.venv/
+__pycache__/
+*.pyc
+*.h5
+earthdata.txt
+token.txt
+.DS_Store
+Thumbs.db
+/output/*.png
+/output/*.pdf
