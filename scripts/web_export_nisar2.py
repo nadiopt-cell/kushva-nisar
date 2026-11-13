@@ -5,7 +5,7 @@ from rasterio.transform import from_origin
 from rasterio.merge import merge
 from PIL import Image
 R=Path(r"E:\ai_project\30days_challenge\day14_borges"); W=R/"web/data"
-AOI=(59.45,58.18,60.10,58.60); res=20.0
+AOI=(59.45,58.18,60.10,58.60); res=30.0
 l,b,r,t=transform_bounds("EPSG:4326","EPSG:3857",*AOI)
 l=np.floor(l/res)*res; b=np.floor(b/res)*res; r=np.ceil(r/res)*res; t=np.ceil(t/res)*res
 w=int((r-l)/res); h=int((t-b)/res); tr=from_origin(l,t,res,res)

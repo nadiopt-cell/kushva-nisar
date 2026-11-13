@@ -332,7 +332,11 @@ function initMap(){
   window.__map=map;
   map.on('load',()=>{
     try{ addLayers(map); $('#cbPre').checked=false; $('#cbPost').checked=false; $('#cbNisar').checked=true; $('#cbContour').checked=true; $('#cbHill').checked=true; applyMain(); }catch(e){ console.error('addLayers failed',e); $('#loader .ls').textContent='ошибка слоёв: '+e.message; }
-    setTimeout(()=>$('#loader').classList.add('hide'),650);
+    let loaderDone=false;
+    const hideLoader=()=>{ if(loaderDone) return; loaderDone=true; $('#loader').classList.add('hide'); };
+    const checkLoaded=()=>{ if(map.isSourceLoaded('nisar_coh') && map.isSourceLoaded('s2_pre')) hideLoader(); };
+    map.on('sourcedata',checkLoaded);
+    setTimeout(hideLoader,15000);
     fmtScale();
     map.on('click','l_cfill',e=>{
       const p=(e.features&&e.features[0]&&e.features[0].properties)||{};

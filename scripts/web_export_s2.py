@@ -6,7 +6,7 @@ from PIL import Image
 R=Path(r"E:\ai_project\30days_challenge\day14_borges")
 W=Path(R/"web/data"); W.mkdir(parents=True,exist_ok=True)
 AOI=(59.45,58.18,60.10,58.60)
-def dst_grid(res=20.0):
+def dst_grid(res=30.0):
     l,b,r,t=transform_bounds("EPSG:4326","EPSG:3857",*AOI)
     l=np.floor(l/res)*res; b=np.floor(b/res)*res; r=np.ceil(r/res)*res; t=np.ceil(t/res)*res
     w=int((r-l)/res); h=int((t-b)/res)
@@ -29,7 +29,7 @@ def srgb(x,gam=1.0):
     x=np.clip(x,0,1)**gam
     return (255*x+0.5).astype("uint8")
 
-g=dst_grid(20.0)
+g=dst_grid(30.0)
 l,b,r,t,w,h,tr=g
 print("grid",w,h)
 meta={"rasters":{},"aoi":[l,b,r,t]}
